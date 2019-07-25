@@ -19,7 +19,7 @@ Data *users = new Data[count];
 
 byte readCard[4]; // Stores scanned ID read from RFID Module
 #define SS_PIN 15
-#define RST_PIN 4
+#define RST_PIN 10
 MFRC522 mfrc522(SS_PIN, RST_PIN);
 
 ///////////////////////////////////////// Get PICC's UID ///////////////////////////////////
@@ -28,6 +28,17 @@ void blinkLed(int goip){
       delay(500);            
       digitalWrite(goip, LOW);
 }
+
+void setupLeds(){
+  pinMode(5, OUTPUT);
+  digitalWrite(5, HIGH); 
+  pinMode(0, OUTPUT);
+  digitalWrite(0, LOW); 
+  pinMode(2, OUTPUT);
+  digitalWrite(2, LOW); 
+}
+
+
 
 void getID()
 {
@@ -78,15 +89,10 @@ void setup()
   users[1].user = "Lorenz";
   users[1].userRfid = "fa80d116";
 
-  pinMode(5, OUTPUT);
-  digitalWrite(5, HIGH); 
-  pinMode(0, OUTPUT);
-  digitalWrite(0, LOW); 
-  pinMode(2, OUTPUT);
-  digitalWrite(2, LOW); 
-
-
   Serial.println(F("Everything is ready"));
+
+  setupLeds();
+
   Serial.println(F("Waiting PICCs to be scanned"));
 }
 
